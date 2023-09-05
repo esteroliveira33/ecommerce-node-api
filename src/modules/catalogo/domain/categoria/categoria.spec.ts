@@ -29,7 +29,8 @@ beforeAll(async () => {
 describe('Entidade de Domínio: Categoria (Criar)', () => {
 
     //Teste define um conjunto de expectativas relacionadas.
-    //Recebe o nome do teste e uma função que contém as expectativas a serem testadasest('Deve criar uma Categoria Válida - ', async () => {
+    //Recebe o nome do teste e uma função que contém as expectativas a serem testada
+    test('Deve criar uma Categoria Válida - ', async () => {
     
         //Dado (Given)
         const categoriaValida: CriarCategoriaProps = {
@@ -70,6 +71,7 @@ describe('Entidade de Domínio: Categoria (Criar)', () => {
         .toThrowError(NomeCategoriaTamanhoMaximoInvalido)
     });
 
+});
 
 describe('Entidade de Domínio: Categoria (Recuperar)', () => {
 
@@ -102,14 +104,12 @@ describe('Entidade de Domínio: Categoria (Recuperar)', () => {
 
     });
 
-    
-
     test('Não Deve Recuperar Categoria Com Nome Inválido (Tamanho Máximo)', async () => {
 
         //Dado (Given)
         //Nome maior que 50 caracteres
         const categoriaNomeInvalido: RecuperarCategoriaProps = {
-            id: UUIDInvalido,
+            id: UUIDValido,
             nome: nomeCategoriaTamanhoMaxInvalido
         };
 
@@ -119,4 +119,4 @@ describe('Entidade de Domínio: Categoria (Recuperar)', () => {
 
     });
 
-});
+});    
