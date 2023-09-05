@@ -1,0 +1,27 @@
+{
+  "name": "ecommerce-node-api",
+  "version": "1.0.0",
+  "description": "\"comércio eletrônico B2C - varejo\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [
+    "\"varejo\"",
+    "\"B2C\"",
+    "\"ecommerce\"",
+    "\"eletrônico\""
+  ],
+  "author": "\"Ester Oliveira\"",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "@types/node": "^20.2.5",
+    "@vitest/ui": "^0.33.0",
+    "sucrase": "^3.32.0",
+    "typescript": "^5.1.3",
+    "vitest": "^0.33.0"
+  }
+}
