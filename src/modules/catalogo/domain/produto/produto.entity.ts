@@ -1,4 +1,4 @@
-import { Entity } from "../../../../shared/domain/entity";
+import { Entity } from "@shared/domain/entity";
 import { ProdutoMap } from "../../mappers/produto.map";
 import { Categoria } from "../categoria/categoria.entity";
 import { DescricaoProdutoTamanhoMaximoInvalido, DescricaoProdutoTamanhoMinimoInvalido, NomeProdutoTamanhoMaximoInvalido, NomeProdutoTamanhoMinimoInvalido, QtdMaximaCategoriasProdutoInvalida, QtdMinimaCategoriasProdutoInvalida, ValorMinimoProdutoInvalido } from "./produto.exception";
@@ -24,7 +24,7 @@ class Produto extends Entity<IProduto> implements IProduto {
     }
 
     private set nome(value: string) {
-
+        
         if (value.trim().length < 5) {
             throw new NomeProdutoTamanhoMinimoInvalido();
         }
@@ -35,7 +35,7 @@ class Produto extends Entity<IProduto> implements IProduto {
 
         this._nome = value;
     }
-
+    
     public get descricao(): string {
         return this._descricao;
     }
@@ -82,7 +82,7 @@ class Produto extends Entity<IProduto> implements IProduto {
 
         this._categorias = value;
     }
-
+    
     //////////////
     //Construtor//
     //////////////
@@ -119,4 +119,3 @@ class Produto extends Entity<IProduto> implements IProduto {
 }
 
 export { Produto };
-
