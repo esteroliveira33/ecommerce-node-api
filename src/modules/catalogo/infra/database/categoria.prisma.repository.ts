@@ -5,6 +5,7 @@ import { PrismaRepository } from "@shared/infra/database/prisma.repository";
 
 class CategoriaPrismaRepository extends PrismaRepository implements ICategoriaRepository<Categoria> {
 
+
     async recuperarPorUuid(uuid: string): Promise<Categoria | null> {
        const categoriaRecuperada = await this._datasource.categoria.findUnique (
         {
@@ -14,10 +15,7 @@ class CategoriaPrismaRepository extends PrismaRepository implements ICategoriaRe
         }
        )
        if (categoriaRecuperada) {
-        return CategoriaMap.toDomain({
-            id: categoriaRecuperada.id,
-            nome: categoriaRecuperada.nome
-        })
+        return CategoriaMap.fromPrismaModelToDomain(categoriaRecuperada);
        }
        return null;
 

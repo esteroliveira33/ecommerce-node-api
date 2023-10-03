@@ -18,29 +18,44 @@ async function main() {
 
     const categoriaRepo = new CategoriaPrismaRepository(prisma);
 
-    //const categoriaRecuperada = await categoriaRepo.recuperarPorUuid("c2666bdb-c055-40bb-951b-32f899f41e30");
+    const categoriaRecuperada: Categoria | null= await categoriaRepo.recuperarPorUuid("c2666bdb-c055-40bb-951b-32f899f41e30");
 
-    //console.log(categoriaRecuperada);
+    console.log(categoriaRecuperada);
+
+    //const todasCategorias: Array<Categoria> = await categoriaRepo.recuperarTodos();
+    
+    //console.log (todasCategorias);
+
+    //const existeCategoria: boolean = await categoriaRepo.existe("7061d559-ab25-4182-98ce-170afdf2acd2");
+
+    //console.log(existeCategoria);
 
     //const categoria: Categoria = Categoria.criar({
-    //    nome:'Banho'
-    //})    
+     //   nome: 'Sala e quarto'
+    //});
 
     //const categoriaInserida = await categoriaRepo.inserir(categoria);
 
-    //console.log(categoriaInserida);
+    //.log(categoriaInserida);
 
-    //const categorias = await categoriaRepo.recuperarTodos();
+    //const categoria: Categoria= Categoria.recuperar({
+    //    id: "96a7f212-e01d-4de7-8abc-70cabbc898df", 
+    //    nome: "Banho"
+    //})
 
-    //console.log(categorias);
+    //const atualizouCategoria: boolean = await categoriaRepo.atualizar(categoria.id,categoria);
 
-    const categoriaAtualizada = await categoriaRepo.atualizar();
+    //console.log (atualizouCategoria);
 
-}
+    //const categoriaDeletada: boolean = await categoriaRepo.deletar("c2666bdb-c055-40bb-951b-32f899f41e30");
+
+    //console.log(categoriaDeletada);
+
+}   
 
 main()
     .then(async () => {
-        await prisma.$disconnect()
+        await prisma.$disconnect();
     })
     .catch(async (error) => {
        if (error instanceof DomainException) {
@@ -51,6 +66,6 @@ main()
            console.log('Outras Exceções');
            console.log(error.message);
        }
-       await prisma.$disconnect()
-       process.exit(1)
+       await prisma.$disconnect();
+       process.exit(1);
    })
