@@ -1,5 +1,6 @@
 import { Categoria } from '@modules/catalogo/domain/categoria/categoria.entity';
 import { Produto } from '@modules/catalogo/domain/produto/produto.entity';
+import { StatusProduto } from '@modules/catalogo/domain/produto/produto.types';
 import { CategoriaPrismaRepository } from '@modules/catalogo/infra/database/categoria.prisma.repository';
 import { ProdutoPrismaRepository } from '@modules/catalogo/infra/database/produto.prisma.repository';
 import { PrismaClient } from '@prisma/client';
@@ -11,7 +12,7 @@ const prisma = new PrismaClient({
 });
 
 async function main() {
-   
+    
     prisma.$connect().then(
         async () => {
             console.log('Postgres Conectado');
@@ -19,129 +20,180 @@ async function main() {
     );
 
     const categoriaRepo = new CategoriaPrismaRepository(prisma);
+    const produtoRepo = new ProdutoPrismaRepository(prisma);
 
-    const categoriaRecuperada: Categoria | null= await categoriaRepo.recuperarPorUuid("c2666bdb-c055-40bb-951b-32f899f41e30");
-
-    console.log(categoriaRecuperada);
-
-    //const todasCategorias: Array<Categoria> = await categoriaRepo.recuperarTodos();
+    ////////////////////////////////
+    //Recuperar Categoria por UUID//
+    ////////////////////////////////
     
-    //console.log (todasCategorias);
+    //const categoriaRecuperada: Categoria | null = await categoriaRepo.recuperarPorUuid('5ccdd6ab-d043-42f0-937b-1260fe47886a');
 
+    //console.log(categoriaRecuperada);
+
+    /////////////////////////////////
+    //Recuperar Todas as Categorias//
+    /////////////////////////////////
+    
+    //const todasCategorias: Array<Categoria> = await categoriaRepo.recuperarTodos();
+
+    //console.log(todasCategorias);
+
+    ////////////////////////////////
+    //Verifica se Existe Categoria//
+    ////////////////////////////////
+    
     //const existeCategoria: boolean = await categoriaRepo.existe("7061d559-ab25-4182-98ce-170afdf2acd2");
 
     //console.log(existeCategoria);
 
+    /////////////////////
+    //Inserir Categoria//
+    /////////////////////
+    
     //const categoria: Categoria = Categoria.criar({
-     //   nome: 'Sala e quarto'
-    //});
+     //   nome:'Nova Categoria'
+    //});     
 
     //const categoriaInserida = await categoriaRepo.inserir(categoria);
 
-    //.log(categoriaInserida);
+    //console.log(categoriaInserida);
 
-    //const categoria: Categoria= Categoria.recuperar({
-    //    id: "96a7f212-e01d-4de7-8abc-70cabbc898df", 
-    //    nome: "Banho"
-    //})
+    ///////////////////////
+    //Atualizar Categoria//
+    ///////////////////////
+    
+    //const categoria: Categoria = Categoria.recuperar({
+    //    id: "5ccdd6ab-d043-42f0-937b-1260fe47886a",
+    //    nome: "Cozinha Americana"
+    //});     
 
-    //const atualizouCategoria: boolean = await categoriaRepo.atualizar(categoria.id,categoria);
+   //const atualizouCategoria: boolean = await categoriaRepo.atualizar(categoria.id,categoria);
 
-    //console.log (atualizouCategoria);
+    //console.log(atualizouCategoria)
 
-    //const categoriaDeletada: boolean = await categoriaRepo.deletar("c2666bdb-c055-40bb-951b-32f899f41e30");
-
+    /////////////////////
+    //Deletar Categoria//
+    /////////////////////
+    
+    //const categoriaDeletada: boolean = await categoriaRepo.deletar('5ccdd6ab-d043-42f0-937b-1260fe47886a');
+    
     //console.log(categoriaDeletada);
 
-    const produtoRepo =  new ProdutoPrismaRepository(prisma);
-
- ////////////////////////////////
-    //Recuperar Produto por UUID//
     ////////////////////////////////
-   
-    //const produtoRecuperado: Produto | null = await produtoRepo.recuperarPorUuid("7061d559-ab25-4182-98ce-170afdf2acd2");
+	//Recuperar Produto por UUID//
+	////////////////////////////////
+		
+	//const produtoRecuperado: Produto | null = await produtoRepo.recuperarPorUuid("7f35c7f4-ce26-4503-bfce-0afd937adfb8");
 
-    //console.log(produtoRecuperado);
+	//console.log(produtoRecuperado);
+
+    //console.log(produtoRecuperado?.estaDeletado());
 
     ///////////////////
-    //Inserir Produto//
+	//Inserir Produto//
+	///////////////////
+	
+    /*
+    const categoria01: Categoria = Categoria.recuperar({
+        id: "6db7e350-fbc2-4d50-ac60-751ea89bd73f",
+        nome: 'Banho'
+    });     
+
+    const categoria02: Categoria = Categoria.recuperar({
+        id: "2920cc8b-6ccf-4177-bfce-0ca73de60175",
+        nome: 'Sala e Quarto'
+    })
+
+    const produto: Produto = Produto.criar({
+        nome:'Novo Produto',
+        descricao:'Toalha de algodão',
+        valor:250,
+        categorias:[categoria01,categoria02]
+    });
+
+	const produtoInserido = await produtoRepo.inserir(produto);
+
+	console.log(produtoInserido);
+    */
+
+    
+
+    /////////////////////////////////////////////////
+	//Recuperar Todos os Produtos e Suas Categorias//
+	/////////////////////////////////////////////////
+		
+	//const todosProdutos: Array<Produto> = await produtoRepo.recuperarTodos();
+
+	//console.log(todosProdutos);
+
+    ///////////////////////////////////////////////
+	//Atualizar Produto - Sem Atulizar Categorias//
+	///////////////////////////////////////////////
+
+    /*
+    const produto = {
+        id: "b0bf56c5-de23-4bb2-8084-3d40538a1b98",
+        nome: "Toalha de Mesa Grande",
+        descricao: "toalha de algodão",
+        valor: 85
+    }; 
+
+    const atualizouProduto: boolean = await produtoRepo.atualizar(produto.id,produto);
+    
+    */
     ///////////////////
+	//Deletar Produto//
+	///////////////////
+		
+	//const produtoDeletado: boolean = await produtoRepo.deletar("7d6a14d5-02f3-4b6d-8cb8-8601ff151f10");
 
-    //const categoria01: Categoria = Categoria.recuperar({
-    //    id: "2920cc8b-6ccf-4177-bfce-0ca73de60175",
-    //    nome: 'Sala'
-    //});    
+	//console.log(produtoDeletado);
 
-   // const categoria02: Categoria = Categoria.recuperar({
-    //   id: "6db7e350-fbc2-4d50-ac60-751ea89bd73f",
-    //  nome: 'Banho'
-    //});
+    ////////////////////////////////////////////
+	//Adicionar e Remover Categoria ao Produto//
+	////////////////////////////////////////////
+    
+    //const produtoRecuperado: Produto | null = await produtoRepo.recuperarPorUuid("737f111b-eba1-457f-9552-5b5f28511d5d");
 
-    //const produto: Produto = Produto.criar({
-    //    nome:'Toalha de mesa',
-    //    descricao:'toalha de algodão',
-    //    valor:40,
-    //    categorias:[categoria01,categoria02]
-    // });
+    //const categoriaRecuperada: Categoria | null = await categoriaRepo.recuperarPorUuid("03f890b0-684a-44ba-a887-170e26bb2cd2");
 
-    //const produtoInserido = await produtoRepo.inserir(produto);
+    //if (produtoRecuperado && categoriaRecuperada){
 
-    //console.log(produtoInserido);
+        //if (produtoRecuperado.adicionarCategoria(categoriaRecuperada)) {
+        //    await produtoRepo.adicionarCategoria(produtoRecuperado,categoriaRecuperada);
+        //}
 
-    /////////////////////
-    //Atualizar Produto//
-    /////////////////////
+       //if (produtoRecuperado.removerCategoria(categoriaRecuperada)) {
+        //    await produtoRepo.removerCategoria(produtoRecuperado,categoriaRecuperada);
+        //}
 
-    const categoria01: Categoria = Categoria.recuperar({
-        id: '7061d559-ab25-4182-98ce-170afdf2acd2',
-        nome: 'mesa'
-    });    
+    //}
 
-    const categoria02: Categoria = Categoria.recuperar({
-        id: '96a7f212-e01d-4de7-8abc-70cabbc898fd',
-        nome: 'banho'
-    })
-   
-    const produto: Produto = Produto.recuperar({
-        id: "c3d7d942-e368-4e9c-85e5-5bb898d776fc",
-        nome: "Toalha de Mesa Grande",
-        descricao: "Toalha de Algodão",
-        valor: 100,
-        categorias:[categoria01,categoria02]
-    });    
+    //////////////////////////
+    //Alterar Status Produto//
+    //////////////////////////
 
-    const atualizouProduto: boolean = await produtoRepo.atualizar(produto.id,produto);
+    //const produtoRecuperado: Produto | null = await produtoRepo.recuperarPorUuid("ace8780f-1aac-4219-9b36-e13b60159e4b");
 
-    console.log(atualizouProduto) /////////////////////
-    //Atualizar Produto//
-    /////////////////////
+    //if (produtoRecuperado) {
+    //    const alterouStatusProduto: boolean = await produtoRepo.alterarStatus(produtoRecuperado,StatusProduto.ATIVO)
+    //    console.log(alterouStatusProduto);
+    //}
 
-    const categoria01: Categoria = Categoria.recuperar({
-        id: '7061d559-ab25-4182-98ce-170afdf2acd2',
-        nome: 'mesa'
-    });    
+    ////////////////////////////////////
+	//Recuperar Produtos por Categoria//
+	////////////////////////////////////
+			
+	//const todosProdutosPorCategoria: Array<Produto> = await produtoRepo.recuperarPorCategoria("03f890b0-684a-44ba-a887-170e26bb2cd2");
 
-    const categoria02: Categoria = Categoria.recuperar({
-        id: '96a7f212-e01d-4de7-8abc-70cabbc898fd',
-        nome: 'banho'
-    })
-   
-    const produto: Produto = Produto.recuperar({
-        id: "c3d7d942-e368-4e9c-85e5-5bb898d776fc",
-        nome: "Toalha de Mesa Grande",
-        descricao: "Toalha de Algodão",
-        valor: 100,
-        categorias:[categoria01,categoria02]
-    });    
+	//console.log(todosProdutosPorCategoria);
+    
 
-    const atualizouProduto: boolean = await produtoRepo.atualizar(produto.id,produto);
-
-    console.log(atualizouProduto)
-}   
+}
 
 main()
     .then(async () => {
-        await prisma.$disconnect();
+        await prisma.$disconnect()
     })
     .catch(async (error) => {
        if (error instanceof DomainException) {
@@ -152,6 +204,6 @@ main()
            console.log('Outras Exceções');
            console.log(error.message);
        }
-       await prisma.$disconnect();
-       process.exit(1);
+       await prisma.$disconnect()
+       process.exit(1)
    })
