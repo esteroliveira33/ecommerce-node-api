@@ -1,6 +1,5 @@
 import { IDatasControle, KeysDatasControle } from "@shared/domain/datas.types";
 import { Categoria } from "../categoria/categoria.entity";
-import { NodeRuntime } from "inspector";
 
 //Todos os atributos/propriedades que um produto deve ter no sistema
 //Auxilia na criação de invariantes e modelos ricos
@@ -19,7 +18,7 @@ type CriarProdutoProps = Omit<IProduto, "id" | KeysDatasControle>;
 
 //Atributos que são necessários para recuperar uma categoria
 //Tipo representa um dos estados do ciclo de vida da entidade
-type RecuperarProdutoProps = Required<IProduto> & {
+type RecuperarProdutoProps = IProduto & {
     id: NonNullable<IProduto['id']>
 }; 
 

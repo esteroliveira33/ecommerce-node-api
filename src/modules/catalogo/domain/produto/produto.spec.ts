@@ -213,5 +213,135 @@ describe('Entidade de Domínio: Criar Produto', () => {
 
 describe('Entidade de domínio: Adicionar categoria ao Produto', () => {
 
+    test('Deve Adicionar uma Categoria Válida a Um Produto Válido Apto a Ter Uma Nova Categoria', async () => { 
+
+        //Dado (Given)
+        const produtoValidoAptoNovaCategoria: Produto = Produto.recuperar({
+            id: UUIDValido,
+            nome: nomeProdutoValido,
+            descricao: descricaoProdutoValido,
+            valor: valorProdutoValido,
+            categorias: categoriasQtdValidaAptaAdicao
+        });
+
+        //Categoria válida que não seja uma das categorias já adicionadas 
+        const categoriaValida = Categoria.criar ({nome:faker.string.alpha({length:{min:3,max:50}})});
+
+        
+            //Quando (When) e Então (Then)
+            expect(produtoValidoAptoNovaCategoria.adicionarCategoria(categoriaValida))
+                .toBe(categoriaValida);
+
+                expect(produtoValidoAptoNovaCategoria.categorias)
+                .toContain(categoriaValida);
+
+    });
+
+    test('Não Deve Adicionar Uma Categoria Válida a Um Produto Válido Inapto a Ter Uma Nova Categoria - Quantidade Máxima de Categorias', async () => {
+
+        //Dado (Given)
+        const produtoValidoInaptoNovaCategoria: Produto = Produto.recuperar({
+            id: UUIDValido,
+            nome: nomeProdutoValido,
+            descricao: descricaoProdutoValido,
+            valor: valorProdutoValido,
+            categorias: categoriasQtdMaxValidaInaptaAdicao
+        });
+
+        //Categoria válida que não seja uma das categorias já adicionadas
+        const categoriaValida = Categoria.criar({nome:faker.string.alpha({length:{min:3,max:50}})});
+
+        //Quando (When) e Então (Then)
+        expect(() => produtoValidoInaptoNovaCategoria.adicionarCategoria(categoriaValida))
+            .toThrowError(ProdutoExceptions.ProdutoJaPossuiQtdMaximaCategorias);
+   });
+
+   test('Não Deve Adicionar Uma Categoria Válida a Um Produto Válido Inapto a Ter Uma Nova Categoria - Categoria Já Adicionada', async () => {
+
+    //Dado (Given)
+    const produtoValidoInaptoNovaCategoria: Produto = Produto.recuperar({
+        id: UUIDValido,
+        nome: nomeProdutoValido,
+        descricao: descricaoProdutoValido,
+        valor: valorProdutoValido,
+        categorias: categoriasQtdValidaInaptaAdicaoDuplicacao
+    });
+
+    //Categoria válida já adicionada - recupera do array passado no produto anteriormete - garente que é um elemento que já existe
+    const categoriaValida = categoriasQtdValidaInaptaAdicaoDuplicacao[0];
+
+    //Quando (When) e Então (Then)
+    expect(() => produtoValidoInaptoNovaCategoria.adicionarCategoria(categoriaValida))
+        .toThrowError(ProdutoExceptions.ProdutoJaPossuiCategoriaInformada);
+    
+});
+
+});
+
+describe('Entidade de domínio: Remover Categoria do Produto', () => {
+
+    test('Deve Remover Uma Categoria Válida de Um Produto Válido Apto a Ter Uma Categoria Removida', async () => {
+
+        //Dado (Given)
+        const produtoValidoAptoRemoverCategoria: Produto = Produto.recuperar({
+            id: UUIDValido,
+            nome: nomeProdutoValido,
+            descricao: descricaoProdutoValido,
+            valor: valorProdutoValido,
+            categorias: categoriasQtdValidaAptaRemocao
+        });
+
+        //Categoria válida que já esteja adicionada 
+        const categoriaValida = categoriasQtdValidaAptaRemocao[0];
+
+        //Quando (When) e Então (Then)
+        expect(produtoValidoAptoRemoverCategoria.removerCategoria(categoriaValida))
+            .toBe(categoriaValida);
+        
+        expect(produtoValidoAptoRemoverCategoria.categorias)  
+            .not.toContain(categoriaValida);
+        
+    });
+    
+    test('Não Deve Remover Uma Categoria Válida de Um Produto Válido Inapto a Ter Uma Categoria Removida - Quantidade Mínima de Categorias', async () => {
+
+        //Dado (Given)
+        const produtoValidoInaptoRemoverCategoria: Produto = Produto.recuperar({
+            id: UUIDValido,
+            nome: nomeProdutoValido,
+            descricao: descricaoProdutoValido,
+            valor: valorProdutoValido,
+            categorias: categoriasQtdMinValidaInaptaRemocao
+        });
+
+        //Categoria válida que já esteja adicionada 
+        const categoriaValida = categoriasQtdMinValidaInaptaRemocao[0];
+
+        //Quando (When) e Então (Then)
+        expect(() => produtoValidoInaptoRemoverCategoria.removerCategoria(categoriaValida))
+            .toThrowError(ProdutoExceptions.ProdutoJaPossuiQtdMinimaCategorias);
+        
+    
+    });
+
+    test('Não Deve Remover Uma Categoria Válida de Um Produto Válido Inapto a Ter Uma Categoria Removida - Categoria Não Associada ao Produto', async () => {
+
+        //Dado (Given)
+        const produtoValidoInaptoRemoverCategoria: Produto = Produto.recuperar({
+            id: UUIDValido,
+            nome: nomeProdutoValido,
+            descricao: descricaoProdutoValido,
+            valor: valorProdutoValido,
+            categorias: categoriasQtdValidaInaptaRemocaoNaoAssociada
+        });
+
+        //Categoria válida que não seja uma das categorias já adicionadas
+        const categoriaValida = Categoria.criar({nome:faker.string.alpha({length:{min:3,max:50}})});
+
+        //Quando (When) e Então (Then)
+        expect(() => produtoValidoInaptoRemoverCategoria.removerCategoria(categoriaValida))
+            .toThrowError(ProdutoExceptions.ProdutoNaoPossuiCategoriaInformada);
+        
+    });
     
 });
