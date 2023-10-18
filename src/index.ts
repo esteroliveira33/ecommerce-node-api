@@ -3,13 +3,8 @@ import { Produto } from '@modules/catalogo/domain/produto/produto.entity';
 import { StatusProduto } from '@modules/catalogo/domain/produto/produto.types';
 import { CategoriaPrismaRepository } from '@modules/catalogo/infra/database/categoria.prisma.repository';
 import { ProdutoPrismaRepository } from '@modules/catalogo/infra/database/produto.prisma.repository';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from 'main/infra/database/orm/prisma/client';
 import { DomainException } from '@shared/domain/domain.exception';
-
-const prisma = new PrismaClient({
-    log: ['query', 'info'],
-    errorFormat: 'pretty'
-});
 
 async function main() {
     

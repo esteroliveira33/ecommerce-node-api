@@ -47,6 +47,6 @@ model Produto {
    }
 
    enum StatusProdutoPrisma {
-    ATIVO,
+    ATIVO
     DESATIVO
    }

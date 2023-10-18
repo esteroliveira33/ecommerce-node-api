@@ -1,8 +1,9 @@
-import { Categoria } from "../domain/categoria/categoria.entity";
-import { CategoriaException } from "../domain/categoria/categoria.exception";
-import { Produto } from "../domain/produto/produto.entity";
-import { IProduto, RecuperarProdutoProps } from "../domain/produto/produto.types";
-import { ProdutoComCategoriaPrisma } from "../infra/database/prisma.types";
+import { StatusProdutoPrisma } from "@prisma/client";
+import { Categoria } from "../../domain/categoria/categoria.entity";
+import { CategoriaException } from "../../domain/categoria/categoria.exception";
+import { Produto } from "../../domain/produto/produto.entity";
+import { IProduto, RecuperarProdutoProps, StatusProduto } from "../../domain/produto/produto.types";
+import { ProdutoComCategoriaPrisma } from "../database/prisma.types";
 import { CategoriaMap } from "./categoria.map";
 
 class ProdutoMap {
@@ -15,7 +16,8 @@ class ProdutoMap {
             categorias: produto.categorias,
             dataCriacao: produto.dataCriacao,
             dataAtualizacao: produto.dataAtualizacao,
-            dataExclusao: produto.dataExclusao
+            dataExclusao: produto.dataExclusao,
+            status: produto.status
         }
     }
 
@@ -27,7 +29,7 @@ class ProdutoMap {
 
         const categorias: Array<Categoria> = [];
 
-        produto.categorias.map(
+        produtoPrisma.categorias.map(
             (categoria) => {
                 categorias.push(
                     CategoriaMap.fromPrismaModelToDomain(categoria.categoria)
@@ -43,10 +45,14 @@ class ProdutoMap {
             categorias: categorias,
             dataCriacao: produtoPrisma.dataCriacao,
             dataAtualizacao: produtoPrisma.dataAtualizacao,
-            dataExclusao: produtoPrisma.dataExclusao
+            dataExclusao: produtoPrisma.dataExclusao,
+            status: StatusProduto[produtoPrisma.status]
         });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
     }
 
+    public static toStatusProdutoPrisma(status: StatusProduto): StatusProdutoPrisma{
+        return StatusProdutoPrisma[status.toString() as keyof typeof this.toStatusProdutoPrisma];
+    }
 }
 
 export { ProdutoMap }
