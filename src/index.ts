@@ -3,8 +3,10 @@ import { Produto } from '@modules/catalogo/domain/produto/produto.entity';
 import { StatusProduto } from '@modules/catalogo/domain/produto/produto.types';
 import { CategoriaPrismaRepository } from '@modules/catalogo/infra/database/categoria.prisma.repository';
 import { ProdutoPrismaRepository } from '@modules/catalogo/infra/database/produto.prisma.repository';
-import { prisma } from 'main/infra/database/orm/prisma/client';
+import { prisma } from '@main/infra/database/orm/prisma/client';
 import { DomainException } from '@shared/domain/domain.exception';
+import { categoriaRepositorio as categoriaRepo } from '@modules/catalogo/infra/database';
+import { produtoRepositorio as produtoRepo } from '@modules/catalogo/infra/database';
 
 async function main() {
     
@@ -14,9 +16,7 @@ async function main() {
         }
     );
 
-    const categoriaRepo = new CategoriaPrismaRepository(prisma);
-    const produtoRepo = new ProdutoPrismaRepository(prisma);
-
+    
     ////////////////////////////////
     //Recuperar Categoria por UUID//
     ////////////////////////////////
