@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { beforeAll, describe, expect, test } from "vitest";
 import { Categoria } from "../categoria/categoria.entity";
 import { Produto } from "./produto.entity";
-import {ProdutoExceptions} from "./produto.exception";
+import { ProdutoExceptions } from "./produto.exception";
 import { CriarProdutoProps } from "./produto.types";
 
 let nomeProdutoValido: string;
@@ -23,7 +23,6 @@ let categoriasQtdValidaInaptaAdicaoDuplicacao: Array<Categoria>;
 let categoriasQtdValidaAptaRemocao: Array<Categoria>;
 let categoriasQtdMinValidaInaptaRemocao: Array<Categoria>;
 let categoriasQtdValidaInaptaRemocaoNaoAssociada: Array<Categoria>;
-
 
 //Chamado uma vez antes de iniciar a execução de todos os testes no contexto atual.
 beforeAll(async () => {
@@ -57,17 +56,16 @@ beforeAll(async () => {
 	categoriasQtdMinValidaInaptaRemocao = faker.helpers.arrayElements<Categoria>([categoriaValida01], { min: 1, max: 1});
 	categoriasQtdValidaInaptaRemocaoNaoAssociada = faker.helpers.arrayElements<Categoria>([categoriaValida01,categoriaValida02,categoriaValida03], { min: 2, max: 3});
 
-     //Preenche UUID Válido para Produto
-     UUIDValido = faker.string.uuid(); // Retorna um UUID v4
-
+    //Preenche UUID Válido para Produto
+    UUIDValido = faker.string.uuid(); // Retorna um UUID v4
+    
 });
 
 //Suite de Testes de Unidade - Entidade de Domínio
 //Usando o 'describe', você pode definir como um conjunto de testes ou benchmarks relacionados
-
 describe('Entidade de Domínio: Produto', () => {
 
-    describe('Entidade de Domínio: Criar Produto', () => {
+    describe('Criar Produto', () => {
         
         //Teste define um conjunto de expectativas relacionadas. 
         test('Deve Criar Um Produto Válido', async () => {
@@ -100,7 +98,7 @@ describe('Entidade de Domínio: Produto', () => {
 
             //Quando (When) e Então (Then)
             expect(() => Produto.criar(produtoNomeInvalido))
-                .toThrowError( ProdutoExceptions.NomeProdutoTamanhoMinimoInvalido);
+                .toThrowError(ProdutoExceptions.NomeProdutoTamanhoMinimoInvalido);
 
         });
 
@@ -214,9 +212,9 @@ describe('Entidade de Domínio: Produto', () => {
         
     });
 
-    describe('Entidade de domínio: Adicionar categoria ao Produto', () => {
-
-        test('Deve Adicionar uma Categoria Válida a Um Produto Válido Apto a Ter Uma Nova Categoria', async () => { 
+    describe('Adicionar Categoria ao Produto', () => {
+        
+        test('Deve Adicionar Uma Categoria Válida a Um Produto Válido Apto a Ter Uma Nova Categoria', async () => {
 
             //Dado (Given)
             const produtoValidoAptoNovaCategoria: Produto = Produto.recuperar({
@@ -227,16 +225,15 @@ describe('Entidade de Domínio: Produto', () => {
                 categorias: categoriasQtdValidaAptaAdicao
             });
 
-            //Categoria válida que não seja uma das categorias já adicionadas 
-            const categoriaValida = Categoria.criar ({nome:faker.string.alpha({length:{min:3,max:50}})});
+            //Categoria válida que não seja uma das categorias já adicionadas
+            const categoriaValida = Categoria.criar({nome:faker.string.alpha({length:{min:3,max:50}})});
 
-            
-                //Quando (When) e Então (Then)
-                expect(produtoValidoAptoNovaCategoria.adicionarCategoria(categoriaValida))
-                    .toBe(categoriaValida);
+            //Quando (When) e Então (Then)
+            expect(produtoValidoAptoNovaCategoria.adicionarCategoria(categoriaValida))
+                .toBe(categoriaValida);
 
-                    expect(produtoValidoAptoNovaCategoria.categorias)
-                    .toContain(categoriaValida);
+            expect(produtoValidoAptoNovaCategoria.categorias)
+                .toContain(categoriaValida);
 
         });
 
@@ -257,31 +254,32 @@ describe('Entidade de Domínio: Produto', () => {
             //Quando (When) e Então (Then)
             expect(() => produtoValidoInaptoNovaCategoria.adicionarCategoria(categoriaValida))
                 .toThrowError(ProdutoExceptions.ProdutoJaPossuiQtdMaximaCategorias);
-    });
-
-    test('Não Deve Adicionar Uma Categoria Válida a Um Produto Válido Inapto a Ter Uma Nova Categoria - Categoria Já Adicionada', async () => {
-
-        //Dado (Given)
-        const produtoValidoInaptoNovaCategoria: Produto = Produto.recuperar({
-            id: UUIDValido,
-            nome: nomeProdutoValido,
-            descricao: descricaoProdutoValido,
-            valor: valorProdutoValido,
-            categorias: categoriasQtdValidaInaptaAdicaoDuplicacao
+            
         });
 
-        //Categoria válida já adicionada - recupera do array passado no produto anteriormete - garente que é um elemento que já existe
-        const categoriaValida = categoriasQtdValidaInaptaAdicaoDuplicacao[0];
+        test('Não Deve Adicionar Uma Categoria Válida a Um Produto Válido Inapto a Ter Uma Nova Categoria - Categoria Já Adicionada', async () => {
 
-        //Quando (When) e Então (Then)
-        expect(() => produtoValidoInaptoNovaCategoria.adicionarCategoria(categoriaValida))
-            .toThrowError(ProdutoExceptions.ProdutoJaPossuiCategoriaInformada);
+            //Dado (Given)
+            const produtoValidoInaptoNovaCategoria: Produto = Produto.recuperar({
+                id: UUIDValido,
+                nome: nomeProdutoValido,
+                descricao: descricaoProdutoValido,
+                valor: valorProdutoValido,
+                categorias: categoriasQtdValidaInaptaAdicaoDuplicacao
+            });
+
+            //Categoria válida já adicionada - recupera do array passado no produto anteriormete - garente que é um elemento que já existe
+            const categoriaValida = categoriasQtdValidaInaptaAdicaoDuplicacao[0];
+
+            //Quando (When) e Então (Then)
+            expect(() => produtoValidoInaptoNovaCategoria.adicionarCategoria(categoriaValida))
+                .toThrowError(ProdutoExceptions.ProdutoJaPossuiCategoriaInformada);
+            
+        });
+
+    });
         
-    });
-
-    });
-
-    describe('Entidade de domínio: Remover Categoria do Produto', () => {
+    describe('Remover Categoria do Produto', () => {
 
         test('Deve Remover Uma Categoria Válida de Um Produto Válido Apto a Ter Uma Categoria Removida', async () => {
 
@@ -324,7 +322,6 @@ describe('Entidade de Domínio: Produto', () => {
             expect(() => produtoValidoInaptoRemoverCategoria.removerCategoria(categoriaValida))
                 .toThrowError(ProdutoExceptions.ProdutoJaPossuiQtdMinimaCategorias);
             
-        
         });
 
         test('Não Deve Remover Uma Categoria Válida de Um Produto Válido Inapto a Ter Uma Categoria Removida - Categoria Não Associada ao Produto', async () => {
@@ -348,4 +345,5 @@ describe('Entidade de Domínio: Produto', () => {
         });
         
     });
+    
 });

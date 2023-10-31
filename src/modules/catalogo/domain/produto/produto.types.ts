@@ -2,8 +2,8 @@ import { IDatasControle, KeysDatasControle } from "@shared/domain/datas.types";
 import { ICategoria } from "../categoria/categoria.types";
 
 enum StatusProduto {
-    ATIVO = 'ATIVO',
-    DESATIVO = 'DESATIVO'
+    ATIVO = "ATIVO",
+    DESATIVO = "DESATIVO"
 }
 
 //Todos os atributos/propriedades que um produto deve ter no sistema
@@ -26,7 +26,7 @@ type CriarProdutoProps = Omit<IProduto, "id" | KeysDatasControle | "status">;
 //Tipo representa um dos estados do ciclo de vida da entidade
 type RecuperarProdutoProps = IProduto & {
     id: NonNullable<IProduto['id']>
-}; 
+};
 
 export {
     IProduto, 

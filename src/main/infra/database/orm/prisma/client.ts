@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
+import { PrismaClient } from '@prisma/client';
 
 //Adiciona o prisma aos tipos globais do NodeJS
 declare global {

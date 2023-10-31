@@ -103,14 +103,15 @@ const ProdutoExceptions = {
     DescricaoProdutoTamanhoMinimoInvalido: DescricaoProdutoTamanhoMinimoInvalido,
     DescricaoProdutoTamanhoMaximoInvalido: DescricaoProdutoTamanhoMaximoInvalido,
     ValorMinimoProdutoInvalido: ValorMinimoProdutoInvalido,
-    QtdMinimaCategoriasProdutoInvalida: QtdMinimaCategoriasProdutoInvalida,
+    QtdMinimaCategoriasProdutoInvalida:QtdMinimaCategoriasProdutoInvalida,
     QtdMaximaCategoriasProdutoInvalida: QtdMaximaCategoriasProdutoInvalida,
     ProdutoJaPossuiQtdMaximaCategorias: ProdutoJaPossuiQtdMaximaCategorias,
     ProdutoJaPossuiCategoriaInformada: ProdutoJaPossuiCategoriaInformada,
-    ProdutoJaPossuiQtdMinimaCategorias: ProdutoJaPossuiQtdMinimaCategorias,
-    ProdutoNaoPossuiCategoriaInformada: ProdutoNaoPossuiCategoriaInformada
+    ProdutoJaPossuiQtdMinimaCategorias:ProdutoJaPossuiQtdMinimaCategorias,
+    ProdutoNaoPossuiCategoriaInformada:ProdutoNaoPossuiCategoriaInformada
 }
 
+
 export {
-   ProdutoExceptions
+    ProdutoExceptions
 }

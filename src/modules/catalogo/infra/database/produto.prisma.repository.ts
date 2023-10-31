@@ -1,14 +1,15 @@
+import { Categoria } from "@modules/catalogo/domain/categoria/categoria.entity";
 import { Produto } from "@modules/catalogo/domain/produto/produto.entity";
 import { IProdutoRepository } from "@modules/catalogo/domain/produto/produto.repository.interface";
+import { StatusProduto } from "@modules/catalogo/domain/produto/produto.types";
 import { ProdutoMap } from "@modules/catalogo/infra/mappers/produto.map";
 import { Prisma } from "@prisma/client";
 import { PrismaRepository } from "@shared/infra/database/prisma.repository";
-import { produtoIncludeCategoriaPrisma } from "./prisma.types";
-import { Categoria } from "@modules/catalogo/domain/categoria/categoria.entity";
-import { StatusProduto } from "@modules/catalogo/domain/produto/produto.types";
+import { produtoIncludeCategoriaPrisma } from "@shared/infra/database/prisma.types";
 
 class ProdutoPrismaRepository extends PrismaRepository implements IProdutoRepository<Produto> {
     
+   
     async recuperarPorUuid(uuid: string): Promise<Produto | null> {
         const produtoRecuperado = await this._datasource.produto.findUnique({
             where: {
@@ -24,7 +25,7 @@ class ProdutoPrismaRepository extends PrismaRepository implements IProdutoReposi
 
     async recuperarTodos(): Promise<Produto[]> {
         const produtosRecuperados = await this._datasource.produto.findMany({
-            where:{
+            where: {
                 dataExclusao: null,
                 status: StatusProduto.ATIVO
             },
@@ -91,17 +92,18 @@ class ProdutoPrismaRepository extends PrismaRepository implements IProdutoReposi
         if (produtoDeletado.id) {return true;}
         return false;
     }
+
     async adicionarCategoria(produto: Produto, categoria: Categoria): Promise<boolean> {
-      const categoriaProdutoAdicionada = await this._datasource.produtosCategorias.create(
-        {
-            data:{
-                produtoId: produto.id,
-                categoriaId: categoria.id
+        const categoriaProdutoAdicionada = await this._datasource.produtosCategorias.create(
+            {
+                data:{
+                    produtoId: produto.id,
+                    categoriaId: categoria.id
+                }
             }
-        }
-      );
-      if(categoriaProdutoAdicionada) {return true;}
-      return false;
+        );
+        if (categoriaProdutoAdicionada) {return true;}
+        return false;
     }
 
     async removerCategoria(produto: Produto, categoria: Categoria): Promise<boolean> {
@@ -134,7 +136,7 @@ class ProdutoPrismaRepository extends PrismaRepository implements IProdutoReposi
         if (produtoStatusAlterado.id) {return true;}
         return false;
     }
-    
+
     async recuperarPorCategoria(idCategoria: string): Promise<Produto[]> {
         const produtosPorCategoriaRecuperados = await this._datasource.produto.findMany({
             where: {
@@ -163,8 +165,5 @@ class ProdutoPrismaRepository extends PrismaRepository implements IProdutoReposi
     }
 
 }
-    
-    
-
 
 export { ProdutoPrismaRepository }

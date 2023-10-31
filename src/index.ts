@@ -3,10 +3,11 @@ import { Produto } from '@modules/catalogo/domain/produto/produto.entity';
 import { StatusProduto } from '@modules/catalogo/domain/produto/produto.types';
 import { CategoriaPrismaRepository } from '@modules/catalogo/infra/database/categoria.prisma.repository';
 import { ProdutoPrismaRepository } from '@modules/catalogo/infra/database/produto.prisma.repository';
-import { prisma } from '@main/infra/database/orm/prisma/client';
 import { DomainException } from '@shared/domain/domain.exception';
+import { prisma } from '@main/infra/database/orm/prisma/client';
 import { categoriaRepositorio as categoriaRepo } from '@modules/catalogo/infra/database';
 import { produtoRepositorio as produtoRepo } from '@modules/catalogo/infra/database';
+
 
 async function main() {
     
@@ -16,7 +17,6 @@ async function main() {
         }
     );
 
-    
     ////////////////////////////////
     //Recuperar Categoria por UUID//
     ////////////////////////////////
@@ -46,7 +46,7 @@ async function main() {
     /////////////////////
     
     //const categoria: Categoria = Categoria.criar({
-     //   nome:'Nova Categoria'
+    //    nome:'Cozinha'
     //});     
 
     //const categoriaInserida = await categoriaRepo.inserir(categoria);
@@ -87,23 +87,23 @@ async function main() {
     ///////////////////
 	//Inserir Produto//
 	///////////////////
-	
-    /*
+	/*
+    
     const categoria01: Categoria = Categoria.recuperar({
-        id: "6db7e350-fbc2-4d50-ac60-751ea89bd73f",
-        nome: 'Banho'
+        id: "03f890b0-684a-44ba-a887-170e26bb2cd2",
+        nome: 'Cozinha'
     });     
 
     const categoria02: Categoria = Categoria.recuperar({
-        id: "2920cc8b-6ccf-4177-bfce-0ca73de60175",
-        nome: 'Sala e Quarto'
+        id: "fc762da1-8d2c-4ffa-9559-901db94cb92e",
+        nome: 'Banho'
     })
 
     const produto: Produto = Produto.criar({
-        nome:'Novo Produto',
-        descricao:'Toalha de algodão',
-        valor:250,
-        categorias:[categoria01,categoria02]
+        nome:'Pano de Pratro',
+        descricao:'Algodão fio 60',
+        valor:30,
+        categorias:[categoria01]
     });
 
 	const produtoInserido = await produtoRepo.inserir(produto);
@@ -117,9 +117,9 @@ async function main() {
 	//Recuperar Todos os Produtos e Suas Categorias//
 	/////////////////////////////////////////////////
 		
-	//const todosProdutos: Array<Produto> = await produtoRepo.recuperarTodos();
+	const todosProdutos: Array<Produto> = await produtoRepo.recuperarTodos();
 
-	//console.log(todosProdutos);
+	console.log(todosProdutos);
 
     ///////////////////////////////////////////////
 	//Atualizar Produto - Sem Atulizar Categorias//
@@ -127,10 +127,10 @@ async function main() {
 
     /*
     const produto = {
-        id: "b0bf56c5-de23-4bb2-8084-3d40538a1b98",
-        nome: "Toalha de Mesa Grande",
+        id: "7d6a14d5-02f3-4b6d-8cb8-8601ff151f10",
+        nome: "Toalha de Cozinha",
         descricao: "toalha de algodão",
-        valor: 85
+        valor: 200
     }; 
 
     const atualizouProduto: boolean = await produtoRepo.atualizar(produto.id,produto);

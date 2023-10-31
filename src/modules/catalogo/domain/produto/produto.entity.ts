@@ -3,7 +3,6 @@ import { ProdutoMap } from "../../infra/mappers/produto.map";
 import { Categoria } from "../categoria/categoria.entity";
 import { ProdutoExceptions } from "./produto.exception";
 import { CriarProdutoProps, IProduto, RecuperarProdutoProps, StatusProduto } from "./produto.types";
-import { NomeCategoriaNuloOuIndefinido } from "../categoria/categoria.exception";
 import { RecuperarCategoriaProps } from "../categoria/categoria.types";
 
 class Produto extends Entity<IProduto> implements IProduto {
@@ -16,14 +15,14 @@ class Produto extends Entity<IProduto> implements IProduto {
     private _descricao: string;
     private _valor: number;
     private _categorias: Array<Categoria>;
-    private _dataCriacao?: Date | undefined;
-    private _dataAtualizacao?: Date | undefined;
-    private _dataExclusao?: Date | null | undefined;
+    private _dataCriacao?: Date | undefined; 
+	private _dataAtualizacao?: Date | undefined; 
+	private _dataExclusao?: Date | null | undefined;
     private _status?: StatusProduto | undefined;
     
-    ///////////////
-    //Constantes//
     //////////////
+	//Constantes//
+	//////////////
 
     public static readonly TAMANHO_MINIMO_NOME = 5;
 	public static readonly TAMANHO_MAXIMO_NOME = 50;
@@ -33,7 +32,6 @@ class Produto extends Entity<IProduto> implements IProduto {
     public static readonly QTD_MINIMA_CATEGORIAS = 1; 
     public static readonly QTD_MAXIMA_CATEGORIAS = 3;
     
-   
     ///////////////
     //Gets e Sets//
     ///////////////
@@ -45,13 +43,13 @@ class Produto extends Entity<IProduto> implements IProduto {
     private set nome(nome: string) {
 
         const tamanhoNome = nome.trim().length;
-
+        
         if (tamanhoNome < Produto.TAMANHO_MINIMO_NOME) {
-            throw new  ProdutoExceptions.NomeProdutoTamanhoMinimoInvalido();
+            throw new ProdutoExceptions.NomeProdutoTamanhoMinimoInvalido();
         }
 
         if (tamanhoNome > Produto.TAMANHO_MAXIMO_NOME) {
-            throw new  ProdutoExceptions.NomeProdutoTamanhoMaximoInvalido();
+            throw new ProdutoExceptions.NomeProdutoTamanhoMaximoInvalido();
         }
 
         this._nome = nome;
@@ -66,11 +64,11 @@ class Produto extends Entity<IProduto> implements IProduto {
         const tamanhoDescricao = descricao.trim().length;
 
         if (tamanhoDescricao < Produto.TAMANHO_MINIMO_DESCRICAO) {
-            throw new  ProdutoExceptions.DescricaoProdutoTamanhoMinimoInvalido();
+            throw new ProdutoExceptions.DescricaoProdutoTamanhoMinimoInvalido();
         }
 
-        if (tamanhoDescricao> Produto.TAMANHO_MAXIMO_DESCRICAO) {
-            throw new  ProdutoExceptions.DescricaoProdutoTamanhoMaximoInvalido();
+        if (tamanhoDescricao > Produto.TAMANHO_MAXIMO_DESCRICAO) {
+            throw new ProdutoExceptions.DescricaoProdutoTamanhoMaximoInvalido();
         }
 
         this._descricao = descricao;
@@ -83,7 +81,7 @@ class Produto extends Entity<IProduto> implements IProduto {
     private set valor(valor: number) {
 
         if (valor < Produto.VALOR_MINIMO) {
-            throw new  ProdutoExceptions.ValorMinimoProdutoInvalido();
+            throw new ProdutoExceptions.ValorMinimoProdutoInvalido();
         }
 
         this._valor = valor;
@@ -98,11 +96,11 @@ class Produto extends Entity<IProduto> implements IProduto {
         const qtdCategorias = categorias.length;
 
         if (qtdCategorias < Produto.QTD_MINIMA_CATEGORIAS){
-            throw new  ProdutoExceptions.QtdMinimaCategoriasProdutoInvalida();
+            throw new ProdutoExceptions.QtdMinimaCategoriasProdutoInvalida();
         }
 
         if (qtdCategorias > Produto.QTD_MAXIMA_CATEGORIAS){
-            throw new  ProdutoExceptions.QtdMaximaCategoriasProdutoInvalida();
+            throw new ProdutoExceptions.QtdMaximaCategoriasProdutoInvalida();
         }
 
         this._categorias = categorias;
@@ -111,20 +109,23 @@ class Produto extends Entity<IProduto> implements IProduto {
     public get dataCriacao(): Date | undefined {
         return this._dataCriacao;
     }
-    private set dataCriacao(dataCriacao: Date | undefined) {
-        this._dataCriacao = dataCriacao;
+
+    private set dataCriacao(value: Date | undefined) {
+        this._dataCriacao = value;
     }
 
     public get dataAtualizacao(): Date | undefined {
         return this._dataAtualizacao;
     }
-    private set dataAtualizacao(dataAtualizacao: Date | undefined) {
-        this._dataAtualizacao = dataAtualizacao;
+
+    private set dataAtualizacao(value: Date | undefined) {
+        this._dataAtualizacao = value;
     }
 
     public get dataExclusao(): Date | null | undefined {
         return this._dataExclusao;
     }
+
     private set dataExclusao(value: Date | null | undefined) {
         this._dataExclusao = value;
     }
@@ -132,11 +133,10 @@ class Produto extends Entity<IProduto> implements IProduto {
     public get status(): StatusProduto | undefined {
         return this._status;
     }
+
     private set status(value: StatusProduto | undefined) {
         this._status = value;
     }
-
-
     
     //////////////
     //Construtor//
@@ -149,8 +149,8 @@ class Produto extends Entity<IProduto> implements IProduto {
         this.valor = produto.valor;
         this.categorias = produto.categorias.map((categoria) => { return Categoria.recuperar(categoria as RecuperarCategoriaProps)});
         this.dataCriacao = produto.dataCriacao;
-        this.dataAtualizacao = produto.dataAtualizacao;
-        this.dataExclusao = produto.dataExclusao;
+		this.dataAtualizacao = produto.dataAtualizacao;
+		this.dataExclusao = produto.dataExclusao;
         this.status = produto.status;
     }
 
@@ -175,7 +175,7 @@ class Produto extends Entity<IProduto> implements IProduto {
     }
 
     public estaDeletado(): boolean {
-        return this.dataExclusao !== null ? true : false
+        return this.dataExclusao !== null ? true : false;
     }
 
     public quantidadeCategorias(): number {
@@ -227,6 +227,8 @@ class Produto extends Entity<IProduto> implements IProduto {
         });
         return categoria;
     }
+
+
 }
 
 export { Produto };
