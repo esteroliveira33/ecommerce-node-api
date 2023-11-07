@@ -7,6 +7,7 @@ import { DomainException } from '@shared/domain/domain.exception';
 import { prisma } from '@main/infra/database/orm/prisma/client';
 import { categoriaRepositorio as categoriaRepo } from '@modules/catalogo/infra/database';
 import { produtoRepositorio as produtoRepo } from '@modules/catalogo/infra/database';
+import { recuperarCategoriaPorIdUseCase, recuperarTodasCategoriasUseCase } from '@modules/catalogo/application/use-case';
 
 
 async function main() {
@@ -17,18 +18,20 @@ async function main() {
         }
     );
 
+
+    
     ////////////////////////////////
     //Recuperar Categoria por UUID//
     ////////////////////////////////
     
-    //const categoriaRecuperada: Categoria | null = await categoriaRepo.recuperarPorUuid('5ccdd6ab-d043-42f0-937b-1260fe47886a');
-
-    //console.log(categoriaRecuperada);
+    //console.log(await recuperarCategoriaPorIdUseCase.execute("1f042afc-1a5a-463a-8d59-9bda8e8115b7"));
 
     /////////////////////////////////
     //Recuperar Todas as Categorias//
     /////////////////////////////////
     
+    //console.log(await recuperarTodasCategoriasUseCase.execute());
+
     //const todasCategorias: Array<Categoria> = await categoriaRepo.recuperarTodos();
 
     //console.log(todasCategorias);
@@ -117,9 +120,9 @@ async function main() {
 	//Recuperar Todos os Produtos e Suas Categorias//
 	/////////////////////////////////////////////////
 		
-	const todosProdutos: Array<Produto> = await produtoRepo.recuperarTodos();
+	//const todosProdutos: Array<Produto> = await produtoRepo.recuperarTodos();
 
-	console.log(todosProdutos);
+	//console.log(todosProdutos);
 
     ///////////////////////////////////////////////
 	//Atualizar Produto - Sem Atulizar Categorias//
