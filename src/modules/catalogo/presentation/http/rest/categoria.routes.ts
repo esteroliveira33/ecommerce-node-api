@@ -1,5 +1,5 @@
 import express from 'express';
-import { inserirCategoriaController, recuperarCategoriaPorIdController, recuperarTodasCategoriasController } from './controllers';
+import { atualizarCategoriaController, deletarCategoriaController, inserirCategoriaController, recuperarCategoriaPorIdController, recuperarTodasCategoriasController } from './controllers';
 
 const categoriaRouter = express.Router();
 
@@ -18,4 +18,13 @@ categoriaRouter.post(
     (request, response, next) =>  inserirCategoriaController.inserir(request, response, next)
 );
 
+categoriaRouter.put(
+    '/:id',
+    (request, response, next) =>  atualizarCategoriaController.atualizar(request, response, next)
+);
+
+categoriaRouter.delete(
+    '/:id',
+    (request, response, next) =>  deletarCategoriaController.deletar(request, response, next)
+);
 export { categoriaRouter };

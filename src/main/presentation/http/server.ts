@@ -10,11 +10,8 @@ const createHTTPServer = async (): Promise<http.Server> => {
     app.disabled('x-powered-by');
     app.use(express.json());
     app.use(morgan('tiny'));
-
     app.use('/api/v1', apiv1Router);
-   
     const httpServer: http.Server = http.createServer(app);
-
     return httpServer;
 };
 

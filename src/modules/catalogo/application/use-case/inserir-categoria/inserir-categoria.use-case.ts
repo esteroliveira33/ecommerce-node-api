@@ -12,13 +12,12 @@ class InserirCategoriaUseCase implements IUseCase<CriarCategoriaProps,ICategoria
     }
 
     async execute(categoriaProps: CriarCategoriaProps): Promise<ICategoria> {
-     
+        
         const categoria: Categoria = Categoria.criar(categoriaProps);
 
         const categoriaInserida = await this._categoriaRepositorio.inserir(categoria);
 
         return CategoriaMap.toDTO(categoriaInserida);
-
     }
 
 }

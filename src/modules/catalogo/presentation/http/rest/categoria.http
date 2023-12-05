@@ -3,17 +3,27 @@
 @apiversion = api/v1
 
 ### Recuperar Um Categoria por ID
-GET http://{{host}}:{{port}}/{{apiversion}}/categorias/9d9cffca-4a0e-4964-b115-ef2808253ed5
-
+GET http://{{host}}:{{port}}/{{apiversion}}/categorias/1f042afc-1a5a-463a-8d59-9bda8e8115b7
 
 ### Recuperar Todas as Categorias
 GET http://{{host}}:{{port}}/{{apiversion}}/categorias
-
 
 ### Inserir Uma Categoria
 POST http://{{host}}:{{port}}/{{apiversion}}/categorias
 Content-type: application/json
 
 {
-    "nome":"Sala de Estar"
+    "nome":"Sala de Televisão"
 }
+
+### Atualizar Categoria
+PUT http://{{host}}:{{port}}/{{apiversion}}/categorias/1f042afc-1a5a-463a-8d59-9bda8e8115b7
+Content-type: application/json 
+
+{
+    "id": "1f042afc-1a5a-463a-8d59-9bda8e8115b7",
+    "nome":"Sala de jogos"
+}
+
+### Deletar Categoria
+DELETE http://{{host}}:{{port}}/{{apiversion}}/categorias/dbbaf531-5439-49c9-bcb4-2d8a8fe5e113
