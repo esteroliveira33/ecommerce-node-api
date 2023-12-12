@@ -1,27 +1,36 @@
 import dotenv from 'dotenv';
 import { createHTTPServer } from './presentation/http/server';
 import { prisma } from '@main/infra/database/orm/prisma/client';
+import { logger } from '@shared/helpers/logger.winston';
+import { Application } from 'express';
+import { createExpressApplication } from './presentation/http/app.express';
+import { error } from 'console';
+
 
 async function bootstrap() {
 
     //Carrega variáveis de ambiente do arquivo .env
-	dotenv.config();
+    dotenv.config();
 
     const api_name = process.env.API_NAME;
     const host_name = process.env.HOST_NAME;
     const port = process.env.PORT;
 
-    console.log(`[${api_name}] 🚀 Inicializando a API....`);
+    logger.info(`Inicializando a API....🚀`);
 
-    const httpServer = await createHTTPServer();
+    const app: Application = await createExpressApplication();
+    logger.ok(`Aplicação Express Instanciada e Configurada`);
+
+    const httpServer = await createHTTPServer(app);
+    logger.ok('Servidor HTTP Instanciado e Configurado');
 
     httpServer.listen({ port: port }, async () => {
-        console.log(`[${api_name}] ✅ Servidor HTTP pronto e ouvindo em http://${host_name}:${port}`);
+        logger.ok(`Servidor HTTP Pronto e Ouvindo em http://${host_name}:${port}`);
     });
 
     prisma.$connect().then(
         async () => {
-            console.log(`[${api_name}] ✅ Banco de dados conectado`);
+            logger.ok(`Banco de Dados Conectado`);
         }
     );
 
@@ -29,5 +38,5 @@ async function bootstrap() {
 
 bootstrap()
     .catch((error) => {
-        console.error(error);
+        logger.error(error.message);
     });
