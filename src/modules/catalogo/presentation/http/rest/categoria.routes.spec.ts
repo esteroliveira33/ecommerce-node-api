@@ -6,7 +6,6 @@ import { InserirCategoriaExpressController } from "./controllers/inserir-categor
 import { CriarCategoriaProps, ICategoria } from "@modules/catalogo/domain/categoria/categoria.types";
 import request from 'supertest';
 
-
 let appMock: Application;
 let recuperarCategoriaPorIdControllerMock: MockProxy<RecuperarCategoriaPorIdExpressController>;
 let inserirCategoriaControllerMock: MockProxy<InserirCategoriaExpressController>;

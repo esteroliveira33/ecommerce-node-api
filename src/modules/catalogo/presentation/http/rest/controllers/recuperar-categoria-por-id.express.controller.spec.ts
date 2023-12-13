@@ -5,6 +5,7 @@ import { MockProxy, mock, mockReset } from "vitest-mock-extended";
 import { RecuperarCategoriaPorIdExpressController } from "./recuperar-categoria-por-id.express.controller";
 import { ICategoria } from "@modules/catalogo/domain/categoria/categoria.types";
 import { CategoriaApplicationExceptions } from "@modules/catalogo/application/exception/categoria.application.exception";
+import { HttpErrors } from "@shared/presentation/http/http.error";
 
 
 let requestMock: MockProxy<Request>;
@@ -55,8 +56,8 @@ describe('Controller Express: Recuperar Categoria por ID', () => {
 
     test('Deve Tratar uma Exceção de Categoria Não Encontrada', async () => {
 
-        //Dado (Given)
-        const categoriaInputDTO: ICategoria = {
+          //Dado (Given)
+          const categoriaInputDTO: ICategoria = {
             id: "80830927-8c3e-4db9-9ddf-30ea191f139b",
             nome: "Cama"
         }
@@ -65,12 +66,13 @@ describe('Controller Express: Recuperar Categoria por ID', () => {
         recuperarCategoriaPorIdUseCaseMock.execute.mockRejectedValue(new CategoriaApplicationExceptions.CategoriaNaoEncontrada());
         responseMock.status.mockReturnThis();
 
-        //Quando (When) 
+        //Quando (When)
         await recuperarCategoriaPorIdController.recuperar(requestMock, responseMock, nextMock);
 
         expect(recuperarCategoriaPorIdUseCaseMock.execute).toHaveBeenCalledWith(categoriaInputDTO.id);
         expect(nextMock).toHaveBeenCalled();
-        expect(nextMock.mock.lastCall[0].name).toBe(CategoriaApplicationExceptions.CategoriaNaoEncontrada.name);
+        expect(nextMock.mock.lastCall[0].name).toBe(HttpErrors.NotFoundError.name);
+
 
     });
 
