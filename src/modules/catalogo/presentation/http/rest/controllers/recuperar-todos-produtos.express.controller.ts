@@ -5,22 +5,23 @@ import { IProduto } from "@modules/catalogo/domain/produto/produto.types";
 
 class RecuperarTodosProdutosExpressController extends ExpressController {
 
-    private _recuperarTodosProdutosUseCase: RecuperarTodosProdutosUseCase;
- 
-    constructor(recuperarTodosProdutosUseCase: RecuperarTodosProdutosUseCase) {
-        super();
-        this._recuperarTodosProdutosUseCase = recuperarTodosProdutosUseCase;
-    }
- 
-    async recuperar(request: Request, response: Response, next: NextFunction) {
-      try {
-        const listaProdutosDTO: Array<IProduto> = await this._recuperarTodosProdutosUseCase.execute();
-        this.sendSuccessResponse(response,listaProdutosDTO);
-      } catch (error) {
-        next(error);
-      }
-    }
- 
+  private _recuperarTodProdutosUseCase: RecuperarTodosProdutosUseCase;
+
+  constructor(recuperarTodProdutosUseCase: RecuperarTodosProdutosUseCase) {
+      super();
+      this._recuperarTodProdutosUseCase = recuperarTodProdutosUseCase;
   }
+
+  async recuperar(request: Request, response: Response, next: NextFunction) {
+      try {
+          const listaProdutosDTO: Array<IProduto> = await this._recuperarTodProdutosUseCase.execute();
+          this.sendSuccessResponse(response,listaProdutosDTO);
+      } catch (error) {
+          next(error);
+      }
+
+  }
+
+}
 
 export { RecuperarTodosProdutosExpressController }
